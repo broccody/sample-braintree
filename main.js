@@ -7,7 +7,7 @@ const koaStatic = require('koa-static');
 const mount = require('koa-mount');
 
 const router = require('./src/index');
-const port = 80;
+const port = 3000;
 
 
 app.use(parser());

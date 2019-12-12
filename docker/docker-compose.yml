@@ -1,19 +1,26 @@
 version: '3'
 
 services:
-  nodejs:
-    build: ./app
-    tty: true
+  nginx:
+    image: nginx
     expose:
-      - 80
-    ports:
-      - 3000:3000
+     - 80
     volumes:
-      - ../:/var/www/html
-    working_dir: /var/www/html
+      - ./sites:/etc/nginx/conf.d
+    links:
+      - nodejs:nodejs
     network_mode: bridge
     environment:
       - VIRTUAL_HOST=braintree.broccody.com
       - LETSENCRYPT_HOST=braintree.broccody.com
       - LETSENCRYPT_EMAIL=yim.boonyarit@gmail.com
-    container_name: braintree-server
+    container_name: braintree-server-nginx
+
+  nodejs:
+    build: ./app
+    tty: true
+    volumes:
+      - ../:/var/www/html
+    working_dir: /var/www/html
+    network_mode: bridge
+    container_name: braintree-server-nodejs
