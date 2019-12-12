@@ -199,13 +199,9 @@ export class PaymentProcessor {
      */
     async hook(){
         try{
-
-            console.log(this.requestBody);
-
             const notification = await this.gateway.webhookNotification.parse(this.requestBody.bt_signature, this.requestBody.bt_payload);
 
-
-            console.log(notification.kind);
+            console.log(`notification kind >> ${notification.kind}`);
 
             //here notification.kind must be any of the above events eg for Subscription charged
             if(notification.kind === braintree.WebhookNotification.Kind.SubscriptionChargedSuccessfully){
