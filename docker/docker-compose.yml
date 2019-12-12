@@ -5,8 +5,6 @@ services:
     image: nginx
     expose:
      - 80
-    ports:
-      - 3000:80
     volumes:
       - ./sites:/etc/nginx/conf.d
     links:
@@ -23,6 +21,8 @@ services:
     tty: true
     expose:
       - 3000
+    ports: 
+      - 3000:3000
     volumes:
       - ../:/var/www/html
     working_dir: /var/www/html
