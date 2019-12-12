@@ -19,6 +19,8 @@ services:
   nodejs:
     build: ./app
     tty: true
+    expose:
+      - 3000
     volumes:
       - ../:/var/www/html
     working_dir: /var/www/html

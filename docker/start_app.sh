@@ -14,7 +14,7 @@ docker-compose up -d nginx
 docker exec -it braintree-server-nodejs bash -c 'npm install --unsafe-perm'
 
 if [ "$1" == "debug" ]; then
-    docker exec -it braintree-server-nodejs bash -c "pm2 start app.config.js --only notifyme-api-debug"
+    docker exec -it braintree-server-nodejs bash -c "pm2 start app.config.js --only braintree-server-debug"
 else
-    docker exec -it braintree-server-nodejs bash -c "pm2 start app.config.js --only notifyme-api"
+    docker exec -it braintree-server-nodejs bash -c "pm2 start app.config.js --only braintree-server"
 fi
