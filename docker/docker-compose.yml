@@ -1,0 +1,16 @@
+version: '3'
+
+nodejs:
+  build: ./app
+  tty: true
+  expose:
+    - 80
+  volumes:
+    - ../:/var/www/html
+  working_dir: /var/www/html
+  network_mode: bridge
+  environment:
+    - VIRTUAL_HOST=braintree.broccody.com
+    - LETSENCRYPT_HOST=braintree.broccody.com
+    - LETSENCRYPT_EMAIL=yim.boonyarit@gmail.com
+  container_name: braintree-server
