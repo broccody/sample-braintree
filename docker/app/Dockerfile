@@ -15,4 +15,4 @@ RUN apt-get update && apt-get install -y python-software-properties \
 
 RUN apt-get update && apt-get install -y ffmpeg
 
-RUN npm install -g pm2
+RUN npm install -g pm2 nodemon
