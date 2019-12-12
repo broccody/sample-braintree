@@ -18,6 +18,6 @@ app.use(cors({origin: '*'}))
 
 app.use(router.allowedMethods())
     .use(router.routes())
-    .listen(port, '127.0.0.1', () =>{
+    .listen(port, () =>{
     console.log(`listening on port ${port}`)
 });
