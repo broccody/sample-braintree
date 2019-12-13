@@ -53,5 +53,13 @@ router.post('/api/subscribe', async (ctx, next) =>{
     ctx.body = await payment.subscribe();
 });
 
+/**
+ * Retry Charge Subscription
+ */
+router.post('/api/retry_charge', async (ctx, next) =>{
+    const payment = new PaymentProcessor(gateway, ctx);
+    ctx.body = await payment.retryCharge();
+});
+
 
 module.exports =router;

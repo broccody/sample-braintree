@@ -138,6 +138,38 @@ export class PaymentProcessor {
         }
     }
 
+    async retryCharge(){
+        try{
+            const isMissing = ToolsHelper.isMissing(this.requestBody, ['subscriptionId', 'price']);
+
+            if(isMissing) {
+                this.response.statusText = isMissing + ' is required';
+                this.response.status = 400;
+                this.response.data = isMissing;
+                return this.response.response;
+            }
+
+            let data = await this.gateway.subscription.retryCharge(
+                this.requestBody.subscriptionId,
+                this.requestBody.price,
+                true
+            );
+
+            if(!data.success){
+                throw new Error(data.message)
+            }
+
+            this.response.data = data.message;
+            this.response.statusText = 'Success';
+            this.response.status = 200;
+            this._debug();
+            return this.response.response;
+
+        }catch(e){
+            return this._errorOccurred(e);
+        }
+    }
+
 
     /**
      * create a customer on braintree server
