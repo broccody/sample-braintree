@@ -211,6 +211,8 @@ export class PaymentProcessor {
             }
             // you could add other notification kind here
 
+            console.log(notification);
+
             this.response.statusText = 'DONE';
             this.response.status = 200;
             this.response.data = {};
