@@ -206,12 +206,15 @@ export class PaymentProcessor {
             //here notification.kind must be any of the above events eg for Subscription charged
             if(notification.kind === braintree.WebhookNotification.Kind.SubscriptionChargedSuccessfully){
                 // process notification data
-                const subscription = new SubscriptionHook();
-                await subscription.charged(notification)
-            }
-            // you could add other notification kind here
+                // const subscription = new SubscriptionHook();
+                // await subscription.charged(notification)
 
-            console.log(notification);
+                const { subscription } = notification;
+                const { transactions } = transactions;
+
+                console.log(subscription);
+                console.log(transactions);
+            }
 
             this.response.statusText = 'DONE';
             this.response.status = 200;
