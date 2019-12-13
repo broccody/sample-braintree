@@ -210,7 +210,7 @@ export class PaymentProcessor {
                 // await subscription.charged(notification)
 
                 const { subscription } = notification;
-                const { transactions } = transactions;
+                const { transactions } = subscription;
 
                 console.log(subscription);
                 console.log(transactions);
