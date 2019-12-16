@@ -136,6 +136,8 @@ export class PaymentProcessor {
                 throw new Error(data.message)
             }
 
+            console.log(data);
+
             this.response.data = data.message;
             this.response.statusText = 'Success';
             this.response.status = 200;
