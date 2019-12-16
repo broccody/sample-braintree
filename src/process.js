@@ -105,7 +105,7 @@ export class PaymentProcessor {
      */
     async subscribe(){
         try{
-            const isMissing = ToolsHelper.isMissing(this.requestBody,['nonce', 'planId']);
+            const isMissing = ToolsHelper.isMissing(this.requestBody,['planId']);
 
             if(isMissing) {
                 this.response.statusText = isMissing + ' is required';
@@ -121,10 +121,7 @@ export class PaymentProcessor {
                 return this.response.response;
             }
 
-            const params = {
-                paymentMethodNonce: this.requestBody.nonce,
-                planId: this.requestBody.planId,
-            };
+            const params = this.requestBody;
 
             if (this.requestBody.firstBillingDate) {
                 params.firstBillingDate = moment(this.requestBody.firstBillingDate);
