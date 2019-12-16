@@ -1,5 +1,6 @@
 
 
+import moment from 'moment';
 import {ResponseModel} from './response.model';
 import {AppConfig} from '../config/config';
 import {ToolsHelper} from './Tools.helper';
@@ -121,10 +122,13 @@ export class PaymentProcessor {
             }
 
             const params = {
-                ...this.requestBody,
                 paymentMethodNonce: this.requestBody.nonce,
                 planId: this.requestBody.planId,
             };
+
+            if (this.requestBody.firstBillingDate) {
+                params.firstBillingDate = moment(this.requestBody.firstBillingDate);
+            }
 
             let data = await this.gateway.subscription.create(params);
 
