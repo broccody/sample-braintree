@@ -104,7 +104,7 @@ export class PaymentProcessor {
      */
     async subscribe(){
         try{
-            const isMissing = ToolsHelper.isMissing(this.requestBody,['nonce', 'planId', 'customerId']);
+            const isMissing = ToolsHelper.isMissing(this.requestBody,['nonce', 'planId']);
 
             if(isMissing) {
                 this.response.statusText = isMissing + ' is required';
@@ -120,13 +120,18 @@ export class PaymentProcessor {
                 return this.response.response;
             }
 
-            let data = await this.gateway.subscription.create({
-                    paymentMethodNonce: this.requestBody.nonce,
-                    planId: this.requestBody.planId
-                });
+            const params = {
+                ...this.requestBody,
+                paymentMethodNonce: this.requestBody.nonce,
+                planId: this.requestBody.planId,
+            };
+
+            let data = await this.gateway.subscription.create(params);
+
             if(!data.success){
                 throw new Error(data.message)
             }
+
             this.response.data = data.message;
             this.response.statusText = 'Success';
             this.response.status = 200;
@@ -235,12 +240,20 @@ export class PaymentProcessor {
 
             console.log(`notification kind >> ${notification.kind}`);
 
-            //here notification.kind must be any of the above events eg for Subscription charged
-            if(notification.kind === braintree.WebhookNotification.Kind.SubscriptionChargedSuccessfully){
-                // process notification data
-                // const subscription = new SubscriptionHook();
-                // await subscription.charged(notification)
+            if (notification.kind === braintree.WebhookNotification.Kind.SubscriptionChargedSuccessfully){
 
+                const { subscription } = notification;
+                const { transactions } = subscription;
+
+                console.log(subscription);
+                console.log(transactions);
+            } else if (notification.kind === braintree.WebhookNotification.Kind.SubscriptionWentActive) {
+                const { subscription } = notification;
+                const { transactions } = subscription;
+
+                console.log(subscription);
+                console.log(transactions);
+            } else if (notification.kind === braintree.WebhookNotification.Kind.SubscriptionCanceled) {
                 const { subscription } = notification;
                 const { transactions } = subscription;
 
